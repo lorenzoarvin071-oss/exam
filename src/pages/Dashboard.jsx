@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Summary from '../components/Summary.jsx'
 import TransactionList from '../components/TransactionList.jsx'
 import { useTransactions } from '../context/TransactionContext.jsx'
 
@@ -41,6 +40,7 @@ function Dashboard() {
   return (
     <section className="dashboard">
 
+      {/* Header */}
       <div className="dashboard-header">
         <div>
           <p className="dashboard-label">
@@ -50,8 +50,8 @@ function Dashboard() {
           <h1>Transaction Tracker</h1>
 
           <p className="dashboard-subtitle">
-            Keep track of your income, expenses, and
-            overall financial activity.
+            Monitor your money and keep track of your
+            financial activity.
           </p>
         </div>
 
@@ -63,8 +63,7 @@ function Dashboard() {
         </Link>
       </div>
 
-      <Summary />
-
+      {/* Main Statistics */}
       <div className="stats-grid">
 
         <div className="stat-card">
@@ -73,14 +72,11 @@ function Dashboard() {
           </div>
 
           <div>
-            <span>Total Balance</span>
+            <span>Balance</span>
             <strong>
-              ₱{balance.toLocaleString(
-                'en-PH',
-                {
-                  minimumFractionDigits: 2
-                }
-              )}
+              ₱{balance.toLocaleString('en-PH', {
+                minimumFractionDigits: 2
+              })}
             </strong>
           </div>
         </div>
@@ -91,14 +87,11 @@ function Dashboard() {
           </div>
 
           <div>
-            <span>Total Income</span>
+            <span>Income</span>
             <strong className="income-text">
-              ₱{income.toLocaleString(
-                'en-PH',
-                {
-                  minimumFractionDigits: 2
-                }
-              )}
+              ₱{income.toLocaleString('en-PH', {
+                minimumFractionDigits: 2
+              })}
             </strong>
           </div>
         </div>
@@ -109,14 +102,11 @@ function Dashboard() {
           </div>
 
           <div>
-            <span>Total Expenses</span>
+            <span>Expenses</span>
             <strong className="expense-text">
-              ₱{expense.toLocaleString(
-                'en-PH',
-                {
-                  minimumFractionDigits: 2
-                }
-              )}
+              ₱{expense.toLocaleString('en-PH', {
+                minimumFractionDigits: 2
+              })}
             </strong>
           </div>
         </div>
@@ -127,7 +117,7 @@ function Dashboard() {
           </div>
 
           <div>
-            <span>Transactions</span>
+            <span>Total Transactions</span>
             <strong>
               {transactions.length}
             </strong>
@@ -136,12 +126,16 @@ function Dashboard() {
 
       </div>
 
+      {/* Dashboard Content */}
       <div className="dashboard-grid">
 
+        {/* Recent Transactions */}
         <div className="dashboard-card">
+
           <div className="card-header">
             <div>
               <h2>Recent Transactions</h2>
+
               <p>
                 Your latest financial activity
               </p>
@@ -154,30 +148,35 @@ function Dashboard() {
 
           {recentTransactions.length === 0 ? (
             <div className="dashboard-empty">
+
               <span>📊</span>
 
               <h3>No transactions yet</h3>
 
               <p>
-                Add your first transaction to see it
-                here.
+                Start by adding your first transaction.
               </p>
 
               <Link to="/add">
                 Add Transaction
               </Link>
+
             </div>
           ) : (
             <TransactionList
               transactions={recentTransactions}
             />
           )}
+
         </div>
 
+        {/* Expense Categories */}
         <div className="dashboard-card">
+
           <div className="card-header">
             <div>
               <h2>Expense Categories</h2>
+
               <p>
                 Where your money is going
               </p>
@@ -186,16 +185,20 @@ function Dashboard() {
 
           {topCategories.length === 0 ? (
             <div className="dashboard-empty">
+
               <span>📈</span>
 
               <p>
                 No expense data available yet.
               </p>
+
             </div>
           ) : (
             <div className="category-list">
+
               {topCategories.map(
                 ([category, total]) => {
+
                   const percentage =
                     expense > 0
                       ? (total / expense) * 100
@@ -206,6 +209,7 @@ function Dashboard() {
                       className="category-item"
                       key={category}
                     >
+
                       <div className="category-info">
                         <span>
                           {category}
@@ -233,12 +237,15 @@ function Dashboard() {
                       <small>
                         {percentage.toFixed(1)}%
                       </small>
+
                     </div>
                   )
                 }
               )}
+
             </div>
           )}
+
         </div>
 
       </div>
